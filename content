@@ -1,0 +1,105 @@
+**Introdução à Injeção de Dependência em Flutter
+
+     Na jornada do desenvolvimento de aplicativos móveis com Flutter,
+    é crucial compreender como gerenciar as dependências entre os diferentes componentes de um aplicativo.A injeção de dependência é uma prática fundamental que permite organizar e modularizar o código de forma mais eficiente, promovendo a reutilização e facilitando a manutenção do aplicativo.
+
+                                                                                                                                                                                                                                   A injeção de dependência é um padrão de design que visa reduzir o acoplamento entre classes e módulos,
+    permitindo que as dependências sejam fornecidas externamente a uma classe, em vez de serem criadas internamente.Em Flutter, isso é particularmente relevante ao lidar com serviços, utilitários e outras dependências externas.
+
+                                                                                                                                                                                        Neste contexto,
+    exploraremos cada tipo de injeção de dependência em detalhes, fornecendo exemplos práticos e destacando as distinções entre eles.Ao final, você estará equipado com o conhecimento necessário para aplicar a injeção de dependência de forma eficaz em seus projetos Flutter, promovendo uma arquitetura mais modular, testável e escalável.
+
+                                                                                                                                                                                                                                                                                                                           Vamos mergulhar na fascinante jornada da injeção de dependência em Flutter !
+
+                                                                                                                                                                                                                                                                                                                           1. Injeção de Dependência via Construtor :
+
+    Neste tipo de injeção,
+    as dependências são passadas para uma classe através do construtor. Isso significa que quando você cria uma instância da classe, você precisa fornecer todas as dependências necessárias como parâmetros do construtor.
+
+                                                                                                                                    Exemplo de código :
+
+    class UserService
+{
+  ApiClient apiClient;
+
+  void setApiClient(ApiClient client)
+  {
+    apiClient = client;
+  }
+
+  // Métodos da classe que utilizam apiClient
+}
+
+    **Diferenças :
+
+    As dependências não são fornecidas diretamente no construtor,
+    mas sim por meio de métodos de configuração.Pode permitir maior flexibilidade na configuração das dependências após a criação da instância da classe.
+
+    2. Injeção de Dependência via Métodos :
+
+    Na injeção de dependência via métodos,
+    as dependências não são fornecidas diretamente no construtor da classe,
+    como na injeção via construtor.Em vez disso,
+    a classe define métodos específicos que permitem configurar ou modificar suas dependências após a criação da instância.
+
+    class UserService
+{
+  ApiClient apiClient;
+
+  void setApiClient(ApiClient client)
+  {
+    apiClient = client;
+  }
+
+  // Métodos da classe que utilizam apiClient
+}
+
+void
+main()
+{
+  final userService = UserService();
+  final apiClient = ApiClient();
+
+  // Configurando a dependência apiClient usando o método setApiClient
+  userService.setApiClient(apiClient);
+
+  // Agora podemos utilizar userService com apiClient configurado
+}
+
+No exemplo acima, a classe UserService possui um método setApiClient que permite configurar a dependência apiClient após a criação da instância da classe.No método main, primeiro criamos uma instância da classe UserService e uma instância da classe ApiClient.Em seguida, usamos o método setApiClient para fornecer a instância de ApiClient para UserService, configurando assim a dependência.No entanto, é importante ter em mente que a injeção de dependência via métodos pode tornar menos explícitas as dependências necessárias pela classe, em comparação com a injeção via construtor.Além disso, pode ser necessário garantir que as dependências sejam configuradas corretamente antes de serem utilizadas pelos métodos da classe.
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  3. Injeção de Dependência via Propriedades :
+
+    Na injeção de dependência via propriedades,
+    as dependências são declaradas como propriedades da classe.Essas propriedades
+        podem ser configuradas externamente após a criação da instância da classe,
+    permitindo uma maior flexibilidade no fornecimento e na configuração das dependências.
+
+    class UserService
+{
+  late ApiClient apiClient;
+
+  // Métodos da classe que utilizam apiClient
+}
+
+void
+main()
+{
+  final userService = UserService();
+  final apiClient = ApiClient();
+
+  // Configurando a dependência apiClient após a criação da instância da classe UserService
+  userService.apiClient = apiClient;
+
+  // Agora podemos utilizar userService com apiClient configurado
+}
+
+No exemplo acima, a classe UserService possui uma propriedade apiClient, que é declarada usando a palavra - chave late para indicar que será inicializada posteriormente.Após criar uma instância da classe UserService e uma instância da classe ApiClient no método main, configuramos a dependência apiClient da classe UserService atribuindo a instância de ApiClient à propriedade apiClient.Uma das vantagens da injeção de dependência via propriedades é a flexibilidade que ela oferece.Permite que as dependências sejam configuradas externamente e mesmo após a criação da instância da classe.Isso pode ser útil em situações onde a configuração das dependências pode variar durante o ciclo de vida do aplicativo.
+
+                                                                                                                                                                                                                                                                            No entanto,
+    é importante ter em mente que, como as dependências são configuradas externamente, é responsabilidade do desenvolvedor garantir que as dependências sejam configuradas corretamente antes de serem utilizadas pelos métodos da classe.Além disso, o uso de propriedades para gerenciar dependências pode tornar menos explícitas as dependências necessárias pela classe em comparação com a injeção via construtor.
+
+                                                                                                                                                                                                                                                          **Diferenças :
+
+    As dependências são declaradas como propriedades da classe,
+    mas podem ser configuradas externamente após a criação da instância.Pode ser útil quando a configuração da dependência não é necessária no momento da criação da instância.Espero que isso ajude a esclarecer as diferenças entre os tipos de injeção de dependência em Flutter !Se tiver mais alguma dúvida, estou à disposição para ajudar.
